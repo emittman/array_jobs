@@ -30,7 +30,7 @@ setup_sim <- function(G, K, V){
   
   #data
   y <- t(sapply(1:G, function(g) rnorm(N, X %*% beta[,g], sigma[g])))
-  d <- formatData(y, X)
+  d <- formatData(y, X, transform_y=identity)
   
   #truth
   t <- list(
@@ -49,7 +49,7 @@ setup_sim <- function(G, K, V){
   )
 }
 
-mc_sb <- function(input, n_iter, warmup){
+mcmc_sb <- function(input, n_iter, warmup){
   s <- with(input, mcmc(fdata, fpriors, methodPi = "stickBreaking", n_iter=n_iter,
                         idx_save=1:10*(fdata$G/10) - 1, thin = 1, n_save_P = 1,
                         alpha_fixed = F, verbose = 0, warmup = warmup, estimates = estimates))
