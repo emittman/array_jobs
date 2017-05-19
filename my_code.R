@@ -51,7 +51,7 @@ setup_sim <- function(G, K, V){
 
 mcmc_sb <- function(input, n_iter, warmup){
   s <- with(input, mcmc(fdata, fpriors, methodPi = "stickBreaking", n_iter=n_iter,
-                        idx_save=1:10*(fdata$G/10) - 1, thin = 1, n_save_P = 1,
-                        alpha_fixed = F, verbose = 0, warmup = warmup, estimates = estimates))
+                        idx_save=0:5, thin = 1, n_save_P = 1,
+                        alpha_fixed = F, verbose = 2, warmup = warmup, estimates = estimates))
   return(s)
 }
