@@ -1,5 +1,4 @@
 library(dplyr)
-library(cudarpackage)
 library(remakeGenerator)
 
 # Create folders: 
