@@ -16,8 +16,9 @@ datasets = commands(
 # Instructions for run analysis
 analyses = analyses(
   commands = commands(
-    mc_sb = mcmc_sb(..dataset.., 10, 10)) 
+    mc_sb = mcmc_sb(..dataset.., 10, 10)
+    ) 
   datasets = datasets)
 
 # save all instructions
-save(datasets, analyses, summaries, file='targets.Rdata')
+save(datasets, analyses, file='targets.Rdata')
