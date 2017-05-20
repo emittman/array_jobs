@@ -9,9 +9,12 @@ sapply(ff, dir.create, showWarnings=FALSE)
 datasets = commands(
   small = setup_sim(5000, 1000, 4),
   large = setup_sim(50000, 5000, 8),
-  too_large = setup_sim(50000, 8000, 8)
+  larger = setup_sim(50000, 6000, 8),
+  largerr = setup_sim(50000, 7000, 8),
+  largerr = setup_sim(50000, 8000, 8),
+  largerr = setup_sim(50000, 9000, 8)
   ) %>%
-  expand(values = c("rep1","rep2","rep3","rep4"))
+  expand(values = c("rep1"))#,"rep2","rep3","rep4"))
 
 # Instructions for run analysis
 analyses = analyses(
