@@ -11,8 +11,8 @@ datasets = commands(
   large = setup_sim(50000, 5000, 8),
   larger = setup_sim(50000, 6000, 8),
   largerr = setup_sim(50000, 7000, 8),
-  largerr = setup_sim(50000, 8000, 8),
-  largerr = setup_sim(50000, 9000, 8)
+  largerrr = setup_sim(50000, 8000, 8),
+  largerrrr = setup_sim(50000, 9000, 8)
   ) %>%
   expand(values = c("rep1"))#,"rep2","rep3","rep4"))
 
