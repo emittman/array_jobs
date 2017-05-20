@@ -8,18 +8,14 @@ sapply(ff, dir.create, showWarnings=FALSE)
 # Instructions for dataset simulation
 datasets = commands(
   small = setup_sim(5000, 1000, 4),
-  large = setup_sim(50000, 5000, 8),
-  larger = setup_sim(50000, 6000, 8),
-  largerr = setup_sim(50000, 7000, 8),
-  largerrr = setup_sim(50000, 8000, 8),
-  largerrrr = setup_sim(50000, 9000, 8)
+  large = setup_sim(50000, 5000, 8)
   ) %>%
-  expand(values = c("rep1"))#,"rep2","rep3","rep4"))
+  expand(values = c("rep1","rep2","rep3","rep4"))
 
 # Instructions for run analysis
 analyses = analyses(
   commands = commands(
-    mc_sb = mcmc_sb(..dataset.., 3, 3)
+    mc_sb = mcmc_sb(..dataset.., 1000, 30000)
     ), 
   datasets = datasets)
 
