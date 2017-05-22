@@ -15,7 +15,7 @@ datasets = commands(
 # Instructions for run analysis
 analyses = analyses(
   commands = commands(
-    mc_sb = mcmc_sb(..dataset.., 1000, 30000)
+    mc_sb = mcmc_sb(..dataset.., 20000, 1000)
     ), 
   datasets = datasets)
 
