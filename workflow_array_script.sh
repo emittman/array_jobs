@@ -12,4 +12,4 @@
 
 module load R
 
-R --no-save < worker_task.R #run an R script using R
+R --vanilla --no-save < worker_task.R #run an R script using R

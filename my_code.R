@@ -1,4 +1,4 @@
-setup_sim <- function(G, K, V){
+setup_sim <- function(G, K, V, n_iter, warmup){
   #number of samples
   N <- V*4
   
@@ -37,6 +37,9 @@ setup_sim <- function(G, K, V){
     param=param,
     m=m, C=C, a=a, b=b
   )
+
+  contr <- formatControl(n_iter=n_iter, thin=1, warmup=warmup, methodPi="stickBreaking",
+                         idx_save=0:5, n_save_P=1, alpha_fixed=F, slice_width=1, max_steps=100)
   
   #estimates
   est <- indEstimates(d)
@@ -45,13 +48,12 @@ setup_sim <- function(G, K, V){
     truth = t,
     fdata = d,
     fpriors = p,
-    estimates = est
+    estimates = est,
+    control = contr
   )
 }
 
-mcmc_sb <- function(input, n_iter, warmup){
-  s <- with(input, mcmc(fdata, fpriors, methodPi = "stickBreaking", n_iter=n_iter,
-                        idx_save=0:5, thin = 1, n_save_P = 1,
-                        alpha_fixed = F, verbose = 0, warmup = warmup, estimates = estimates))
+mcmc_sb <- function(input){
+  s <- with(input, mcmc(fdata, fpriors, control, estimates = estimates, verbose=0))
   return(s)
 }
