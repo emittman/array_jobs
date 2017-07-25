@@ -39,7 +39,7 @@ setup_sim <- function(G, K, V, n_iter, warmup){
   )
 
   contr <- formatControl(n_iter=n_iter, thin=1, warmup=warmup, methodPi="stickBreaking",
-                         idx_save=0:5, n_save_P=1, alpha_fixed=F, slice_width=1, max_steps=100)
+                         idx_save=1:5, n_save_P=1, alpha_fixed=F, slice_width=1, max_steps=100)
   
   #estimates
   est <- indEstimates(d)
