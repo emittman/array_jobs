@@ -7,10 +7,10 @@ sapply(ff, dir.create, showWarnings=FALSE)
 
 # Instructions for dataset simulation
 datasets = commands(
-  small = setup_sim(5000, 1000, 4, 20000, 1000),
-  large = setup_sim(50000, 5000, 8, 20000, 1000)
+  small = setup_sim(5000, 1000, 4, 20000, 10000),
+  large = setup_sim(50000, 6000, 8, 20000, 10000)
   ) %>%
-  expand(values = c("rep1","rep2","rep3","rep4"))
+  expand(values = c("rep1","rep2","rep3"))
 
 # Instructions for run analysis
 analyses = analyses(
