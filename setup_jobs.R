@@ -10,10 +10,13 @@ datasets = commands(
 #  verysmall = setup_sim(1000, 1000, 2, 20000, 10000),
 #  small = setup_sim(5000, 5000, 3, 20000, 10000),
 #  medium = setup_sim(10000, 5000, 4, 20000, 10000),
-  mediumv5 = setup_sim(10000, 5000, 5, 20000, 10000),
-  largek7000 = setup_sim(40000, 7000, 6, 20000, 20000),
-  largek8000 = setup_sim(40000, 8000, 6, 20000, 20000)) %>%
-  expand(values = c("rep1","rep2"))
+  # mediumv5 = setup_sim(10000, 5000, 5, 20000, 10000),
+  # largek7000 = setup_sim(40000, 7000, 6, 20000, 20000),
+  # largek8000 = setup_sim(40000, 8000, 6, 20000, 20000),
+  largetest10000 = setup_sim(40000, 10000, 10, 10),
+  largetest12000 = setup_sim(40000, 12000, 10, 10),
+  largetest14000 = setup_sim(40000, 14000, 10, 10)) %>%
+  expand(values = c("rep1"))
 
 # Instructions for run analysis
 analyses = analyses(
