@@ -1,6 +1,6 @@
 setup_sim <- function(G, K, V, n_iter, warmup){
   #number of samples
-  N <- V*4
+  N <- V*4 #assume 4 samples of each type
   
   #group_id
   group <- rep(1:V, each=4)
@@ -8,16 +8,24 @@ setup_sim <- function(G, K, V, n_iter, warmup){
   #design matrix
   X <- cbind(1, rbind(diag(V-1),0))[group,]
   
-  #true base measure
-  m <- c(3, rep(0, V-1))
-  C <- rWishart(1, V, diag(c(1/V, rep(.1/V, V-1))))[,,1]
+  #distribution of clusters
+  m <- rep(0, V)
+  C <- diag(3/(1:V)^2)
   U <- chol(C)
   a <- 1
   b <- 1
   
-  #gene specific
-  beta <- sapply(1:G, function(g) rnorm(V) %*% U + m)
-  sigma <- sapply(1:G, function(g) sqrt(rgamma(1, a, b)))
+  #make clusters
+  t_K <- floor(sqrt(G))
+  betaC <- sapply(1:t_K, function(g) rnorm(V) %*% U + m)
+  sigmaC <- sapply(1:t_K, function(g) sqrt(rgamma(1, a, b)))
+  
+  #cluster assignments
+  z <- sample(1:t_K, size = G, replace=T)
+  
+  #jitter genes
+  beta <- betaC[,z] + sapply(1:G, function(g) rnorm(V) %*% U/10)
+  sigma <- exp(log(sigmaC[z]) + rnorm(G, 0, b/a/4))
   param <- rbind(beta, 1/sigma^2)
   row.names(param) <- c(sapply(1:V, function(v) paste(c("beta",v), collapse="")), "tau2")
   
@@ -39,7 +47,7 @@ setup_sim <- function(G, K, V, n_iter, warmup){
   )
 
   contr <- formatControl(n_iter=n_iter, thin=1, warmup=warmup, methodPi="stickBreaking",
-                         idx_save=1:5, n_save_P=1, alpha_fixed=F, slice_width=1, max_steps=100)
+                         idx_save=1, n_save_P=1, alpha_fixed=F, slice_width=1, max_steps=100)
   
   #estimates
   est <- indEstimates(d)

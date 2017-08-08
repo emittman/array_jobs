@@ -6,17 +6,26 @@ ff <- c('datasets', 'analyses', 'msg', 'output')
 sapply(ff, dir.create, showWarnings=FALSE)
 
 # Instructions for dataset simulation
+#syntax GVK refers to G in {5000,40000}, K in {2000, 4000, 8000}, V in {2,4,6}
 datasets = commands(
-#  verysmall = setup_sim(1000, 1000, 2, 20000, 10000),
-#  small = setup_sim(5000, 5000, 3, 20000, 10000),
-#  medium = setup_sim(10000, 5000, 4, 20000, 10000),
-  # mediumv5 = setup_sim(10000, 5000, 5, 20000, 10000),
-  # largek7000 = setup_sim(40000, 7000, 6, 20000, 20000),
-  # largek8000 = setup_sim(40000, 8000, 6, 20000, 20000),
-  largetest10000 = setup_sim(40000, 10000, 6, 10, 10),
-  largetest12000 = setup_sim(40000, 12000, 6, 10, 10),
-  largetest14000 = setup_sim(40000, 14000, 6, 10, 10)) %>%
-  expand(values = c("rep1"))
+ sss=setup_sim(G=5000, K=2000, V=2, n_iter=30000, warmup=0),
+ ssm=setup_sim(5000, 2000, 4, n_iter=30000, warmup=0),
+ ssl=setup_sim(5000, 2000, 6, n_iter=30000, warmup=0),
+ sms=setup_sim(5000, 4000, 2, n_iter=30000, warmup=0),
+ smm=setup_sim(5000, 4000, 4, n_iter=30000, warmup=0),
+ sml=setup_sim(5000, 4000, 6, n_iter=30000, warmup=0),
+ sls=setup_sim(5000, 8000, 2, n_iter=30000, warmup=0),
+ slm=setup_sim(5000, 8000, 4, n_iter=30000, warmup=0),
+ sll=setup_sim(5000, 8000, 6, n_iter=30000, warmup=0),
+ lss=setup_sim(40000, 2000, 2, n_iter=30000, warmup=0),
+ lsm=setup_sim(40000, 2000, 4, n_iter=30000, warmup=10000),
+ lsl=setup_sim(40000, 2000, 6, n_iter=20000, warmup=40000),
+ lms=setup_sim(40000, 4000, 2, n_iter=30000, warmup=0),
+ lmm=setup_sim(40000, 4000, 4, n_iter=30000, warmup=10000),
+ lml=setup_sim(40000, 4000, 6, n_iter=20000, warmup=40000),
+ lls=setup_sim(40000, 8000, 2, n_iter=30000, warmup=0),
+ llm=setup_sim(40000, 8000, 4, n_iter=30000, warmup=10000),
+ lll=setup_sim(40000, 8000, 6, n_iter=20000, warmup=40000))
 
 # Instructions for run analysis
 analyses = analyses(
