@@ -23,9 +23,9 @@ setup_sim <- function(G, K, V, n_iter, warmup){
   #cluster assignments
   z <- sample(1:t_K, size = G, replace=T)
   
-  #jitter genes
-  beta <- betaC[,z] + sapply(1:G, function(g) rnorm(V) %*% U/10)
-  sigma <- exp(log(sigmaC[z]) + rnorm(G, 0, b/a/4))
+  #DONT jitter genes
+  beta <- betaC[,z] #+ sapply(1:G, function(g) rnorm(V) %*% U/10)
+  sigma <- sigmaC[z] #+ rnorm(G, 0, b/a/4)
   param <- rbind(beta, 1/sigma^2)
   row.names(param) <- c(sapply(1:V, function(v) paste(c("beta",v), collapse="")), "tau2")
   
