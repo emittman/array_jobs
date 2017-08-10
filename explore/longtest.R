@@ -3,7 +3,7 @@ library(cudarpackage)
 
 source("../my_code.R")
 
-setup <- setup_sim(40000, 8000, 6, 120000, 1)
+setup <- setup_sim(40000, 8000, 6, 100000, 1)
 
 dir.create(file.path("misc"))
 
