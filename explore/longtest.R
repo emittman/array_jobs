@@ -3,7 +3,11 @@ library(cudarpackage)
 
 source("../my_code.R")
 
+set.seed(081017)
+
 setup <- setup_sim(40000, 8000, 6, 100000, 1)
+
+saveRDS(setup, "truth.rds")
 
 dir.create(file.path("misc"))
 
@@ -15,27 +19,26 @@ dir.create(file.path("misc"))
 #  return(s)
 #}
 
-warmup_cycles <- 10
+warmup_cycles <- as.integer(10)
 
-warmup_length <- 5000
+warmup_length <- as.integer(5000)
 
-final_length <- 30000
+final_length <- as.integer(30000)
 
 chain <- initFixedGrid(setup$fpriors, setup$estimates)
 
 for(i in warmup_cycles){
-  setup$control$n_iter <- 1
-  setup$control$warmup <- warmup_length
+  setup$control$n_iter <- warmup_length
+  setup$control$warmup <- as.integer(1)
   s <- with(setup, mcmc(fdata, fpriors, control, chain, estimates))
   saveRDS(s, file=paste("misc/wrm-up-cycle-",i,".rds", sep=""))
   zeta <- with(setup, as.integer(sample(fpriors$K, fdata$G, replace=T) - 1))
-  chain <- with(s[['state']], formatChain(beta, pi, tau2, zeta, alpha))
+  id <- order(s[['state']]$pi, decreasing=TRUE)
+  chain <- with(s[['state']], formatChain(beta[,id], pi[id], tau2[id], zeta, alpha))
 }
 
 setup$control$n_iter <- final_length
-setup$control$warmup <- 1
+setup$control$warmup <- as.integer(1)
 s <- with(setup, mcmc(fdata, fpriors, control, chain, estimates))
 saveRDS(s, "misc/final_run.rds")
 
-
-  
