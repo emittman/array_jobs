@@ -5,7 +5,7 @@ dir.create(file.path("data"))
 library(coda)
 library(plyr)
 
-df <- ldply(c("sss","ssm","ssl","sms","smm","sml"), function(f) {
+df <- ldply(c("sss","ssm","ssl","sms","smm","sml","sls","slm","sll"), function(f) {
   file <- paste("../analyses/", "mc_sb_", f, ".rds", sep = "")
   dat <- readRDS(file)
   len <- length(dat[[1]][["alpha"]])
