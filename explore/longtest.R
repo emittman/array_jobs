@@ -34,7 +34,7 @@ for(i in warmup_cycles){
   saveRDS(s, file=paste("misc/wrm-up-cycle-",i,".rds", sep=""))
   zeta <- with(setup, as.integer(sample(fpriors$K, fdata$G, replace=T) - 1))
   id <- order(s[['state']]$pi, decreasing=TRUE)
-  chain <- with(s[['state']], formatChain(beta[,id], pi[id], tau2[id], zeta, alpha))
+  chain <- with(s[['state']], formatChain(beta[,id], exp(pi[id]), tau2[id], zeta, alpha))
 }
 
 setup$control$n_iter <- final_length
