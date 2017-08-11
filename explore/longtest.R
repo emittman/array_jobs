@@ -27,7 +27,7 @@ final_length <- as.integer(30000)
 
 chain <- initFixedGrid(setup$fpriors, setup$estimates)
 
-for(i in warmup_cycles){
+for(i in 1:warmup_cycles){
   setup$control$n_iter <- warmup_length
   setup$control$warmup <- as.integer(1)
   s <- with(setup, mcmc(fdata, fpriors, control, chain, estimates))
