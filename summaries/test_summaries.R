@@ -11,8 +11,9 @@ df <- ldply(c("sss","ssm","ssl","sms","smm","sml","sls","slm","sll"), function(f
   len <- length(dat[[1]][["alpha"]])
   d <- data.frame(which.sim=f, t(as.numeric(summary(dat[[1]][["alpha"]][20000:len]))),
                   effectiveSize(mcmc(dat[[1]][["alpha"]][20000:len])),
-                  dat[[4]])
-  names(d)[2:9] <- c("min","q1","median","mean","q3","max","n_eff","time")
+                  dat[[4]],
+                  len)
+  names(d)[2:9] <- c("min","q1","median","mean","q3","max","n_eff","time","mcmc_iter")
   d
 })
 
