@@ -1,4 +1,4 @@
-setup_sim <- function(G, K, V, n_iter, warmup){
+setup_sim <- function(G, K, V, n_iter, warmup, init.iter){
   #number of samples
   N <- V*4 #assume 4 samples of each type
   
@@ -52,16 +52,30 @@ setup_sim <- function(G, K, V, n_iter, warmup){
   #estimates
   est <- indEstimates(d)
   
+  #starting values
+  init.chain <- initFixedGrid(p, est)
+  
+  #pilot chain to get good initial value
+  init.contr <- contr
+  init.contr$n_iter <- as.integer(init.iter)
+  init.contr$warmup <- as.integer(1)
+  s.init <- mcmc(d, p, init.contr, init.chain, est)
+  zeta <- as.integer(sample(p$K, d$G, replace=T) - 1)
+  id <- order(s.init[['state']]$pi, decreasing=TRUE)
+  c <- with(s.init[['state']], formatChain(beta[,id], exp(pi[id]), tau2[id], zeta, alpha))
+  
+  
   list(
     truth = t,
-    fdata = d,
-    fpriors = p,
+    data = d,
+    chain = c,
+    priors = p,
     estimates = est,
     control = contr
   )
 }
 
 mcmc_sb <- function(input){
-  s <- with(input, mcmc(fdata, fpriors, control, estimates = estimates, verbose=0))
+  s <- with(input, mcmc(data, priors, control, chain, estimates = estimates, verbose=0))
   return(s)
 }
