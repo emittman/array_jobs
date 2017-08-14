@@ -27,3 +27,26 @@ traceNumOcc <- function(filename, range=NULL){
 traceMaxId <- function(filename, range=NULL){
   traceSmth(filename, range, "max_id")
 }
+
+plot_means <- function(filename, which.means, dims=c(1,2), truth=TRUE, both=FALSE){
+  stopifnot(length(dims)==2)
+  print(cat("run from analyses/ directory\n"))
+  mcout <- readRDS(paste("mcmc_",filename,".rds",sep=""))$summaries$means_betas
+  true <- readRDS(paste("../datasets/",filename,".rds",sep=""))$truth$param
+  ols <- readRDS(paste("../datasets/",filename,".rds",sep=""))$estimates$beta
+  
+  stopifnot(min(dims)>0, max(dims) <= dim(mcout)[1])
+  stopifnot(all(which.means<=dim(mcout)[2]))
+  if(truth){
+    plot(t(true[dims,which.means]))
+  } else {
+    plot(t(ols[dims,which.means]))
+  }
+  if(truth&both){
+    plot(t(true[dims,]),pch=21)
+    points(t(true[dims,which.means]),pch=21, bg=1)
+    points(t(ols[dims,which.means]), pch=23, col="green", bg="green")
+  }
+  require(scales)
+  points(t(mcout[dims,which.means]), col=alpha("red",.5), bg=alpha("red",.5))
+}

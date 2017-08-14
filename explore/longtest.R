@@ -5,9 +5,10 @@ source("../my_code.R")
 
 set.seed(081017)
 
-setup <- setup_sim(40000, 8000, 6, 100000, 1)
+# setup <- setup_sim(40000, 8000, 6, 100000, 1)
 
-saveRDS(setup, "truth.rds")
+# saveRDS(setup, "truth.rds")
+setup <- readRDS("truth.rds")
 
 dir.create(file.path("misc"))
 
@@ -19,26 +20,30 @@ dir.create(file.path("misc"))
 #  return(s)
 #}
 
-warmup_cycles <- as.integer(10)
+# warmup_cycles <- as.integer(10)
 
 warmup_length <- as.integer(5000)
 
-final_length <- as.integer(30000)
+final_length <- as.integer(10000)
 
-chain <- initFixedGrid(setup$fpriors, setup$estimates)
+setup$control$methodPi <- "symmDirichlet"
+sd_out <- with(setup, mcmc(fdata, fpriors, control, estimates=estimates))
+saveRDS(sd_out, "misc/first_run_SD.rds")
 
-for(i in 1:warmup_cycles){
-  setup$control$n_iter <- warmup_length
-  setup$control$warmup <- as.integer(1)
-  s <- with(setup, mcmc(fdata, fpriors, control, chain, estimates))
-  saveRDS(s, file=paste("misc/wrm-up-cycle-",i,".rds", sep=""))
-  zeta <- with(setup, as.integer(sample(fpriors$K, fdata$G, replace=T) - 1))
-  id <- order(s[['state']]$pi, decreasing=TRUE)
-  chain <- with(s[['state']], formatChain(beta[,id], exp(pi[id]), tau2[id], zeta, alpha))
-}
-
-setup$control$n_iter <- final_length
-setup$control$warmup <- as.integer(1)
-s <- with(setup, mcmc(fdata, fpriors, control, chain, estimates))
-saveRDS(s, "misc/final_run.rds")
+# chain <- initFixedGrid(setup$fpriors, setup$estimates)
+# 
+# for(i in 1:warmup_cycles){
+#   setup$control$n_iter <- warmup_length
+#   setup$control$warmup <- as.integer(1)
+#   s <- with(setup, mcmc(fdata, fpriors, control, chain, estimates))
+#   saveRDS(s, file=paste("misc/wrm-up-cycle-",i,".rds", sep=""))
+#   zeta <- with(setup, as.integer(sample(fpriors$K, fdata$G, replace=T) - 1))
+#   id <- order(s[['state']]$pi, decreasing=TRUE)
+#   chain <- with(s[['state']], formatChain(beta[,id], exp(pi[id]), tau2[id], zeta, alpha))
+# }
+# 
+# setup$control$n_iter <- final_length
+# setup$control$warmup <- as.integer(1)
+# s <- with(setup, mcmc(fdata, fpriors, control, chain, estimates))
+# saveRDS(s, "misc/final_run_sd.rds")
 
