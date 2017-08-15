@@ -79,3 +79,8 @@ mcmc_sb <- function(input){
   s <- with(input, mcmc(data, priors, control, chain, estimates = estimates, verbose=0))
   return(s)
 }
+mcmc_sd <- function(input){
+  input$control$methodPi <- "symmDirichlet"
+  s <- with(input, mcmc(data, priors, control, chain, estimates = estimates, verbose=0))
+  return(s)
+}
