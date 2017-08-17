@@ -13,7 +13,7 @@ traceSmth <- function(filename, range, th){
   }
   cat(paste("traceplot for ", th, ", range: [", id[1], ",", id[len], "]", sep=""))
   cat(paste("length: ", len, "\n", sep=""))
-  traceplot(mcmc(s[[1]]$alpha[id]), ylab = th)
+  traceplot(mcmc(s[[1]][[th]][id]), ylab = th)
 }
 
 traceAlpha <- function(filename, range=NULL){
