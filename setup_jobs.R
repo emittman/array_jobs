@@ -25,7 +25,8 @@ datasets = commands(
  lml=setup_sim(2^15, 2^11, 6, n_iter=50000, warmup=5000, init.iter=500),
  lls=setup_sim(2^15, 2^12, 2, n_iter=50000, warmup=5000, init.iter=500),
  llm=setup_sim(2^15, 2^12, 4, n_iter=50000, warmup=5000, init.iter=500),
- lll=setup_sim(2^15, 2^12, 6, n_iter=50000, warmup=5000, init.iter=500))
+ lll=setup_sim(2^15, 2^12, 6, n_iter=50000, warmup=5000, init.iter=500)
+)
 
 # Instructions for run analysis
 analyses = analyses(

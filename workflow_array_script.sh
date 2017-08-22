@@ -11,5 +11,6 @@
 #SBATCH --mail-type=FAIL
 
 module load R
+module load cuda
 
 R --vanilla --no-save < worker_task.R #run an R script using R
