@@ -10,8 +10,9 @@ lapply(pkgs, library,  character.only = TRUE, quietly=TRUE )
 
 # inputs
 load('targets.Rdata')
+load('seeds.RData')
 source('my_code.R')
-
+set.seed(seeds[i])
 # ==================================================
 # 1) Create a dataset, run the analysis and its summary
 # 1.1 Create data set and save it
